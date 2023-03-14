@@ -4,6 +4,7 @@ import org.example.model.dto.PlayerTeamDto;
 import org.example.model.dto.TeamDto;
 import org.example.model.dto.TeamUpdDto;
 import org.example.service.TeamService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ public class TeamController {
 
     private final TeamService teamService;
 
+    @Autowired
     public TeamController(TeamService teamService) {
         this.teamService = teamService;
     }

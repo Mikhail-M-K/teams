@@ -3,7 +3,7 @@ package org.example.model.dto;
 import java.util.Date;
 
 public class PlayerTeamDto {
-    //private Long id;
+    private Long id;
     private Long teamId;
 
     private String name;
@@ -19,13 +19,13 @@ public class PlayerTeamDto {
     public PlayerTeamDto() {
     }
 
-    /*public Long getId() {
+    public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }*/
+    }
 
     public Long getTeamId() {
         return teamId;

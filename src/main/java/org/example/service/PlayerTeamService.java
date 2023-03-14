@@ -7,9 +7,9 @@ public interface PlayerTeamService {
 
     void createPLayer(PlayerTeamDto playerTeamDto);
 
-    void transferPlayer(Long Id, Long IdTeam);
+    void transferPlayer(Long id, Long idTeam);
 
-    void deletePlayer(Long Id);
+    void deletePlayer(Long id);
 
-    void updatePlayer(PlayerTeamUpdDto playerTeamUpdDto, Long id);
+    void update(Long id, PlayerTeamUpdDto playerTeamUpdDto);
 }

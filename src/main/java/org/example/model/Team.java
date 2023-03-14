@@ -10,8 +10,8 @@ import java.util.Set;
 public class Team {
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "teamsIdSeq", sequenceName = "teams_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "teamsIdSeq")
+    @SequenceGenerator(name = "teamsIdSeq", sequenceName = "SEQ_SERVICE", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "teamsIdSeq")
     private Long id;
 
     @Column(name = "team_name")
@@ -29,5 +29,43 @@ public class Team {
     public Team() {
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public String getSportType() {
+        return SportType;
+    }
+
+    public void setSportType(String sportType) {
+        SportType = sportType;
+    }
+
+    public Date getFoundationDate() {
+        return foundationDate;
+    }
+
+    public void setFoundationDate(Date foundationDate) {
+        this.foundationDate = foundationDate;
+    }
+
+    public Set<PlayerTeam> getPlayerTeam() {
+        return playerTeam;
+    }
+
+    public void setPlayerTeam(Set<PlayerTeam> playerTeam) {
+        this.playerTeam = playerTeam;
+    }
 }

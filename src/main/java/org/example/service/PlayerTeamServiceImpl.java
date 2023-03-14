@@ -7,6 +7,7 @@ import org.example.repos.PlayerTeamRepo;
 import org.example.repos.TeamRepo;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Service
@@ -23,10 +24,10 @@ public class PlayerTeamServiceImpl implements PlayerTeamService{
     @Transactional
     @Override
     public void createPLayer(PlayerTeamDto playerTeamDto) {
-        playerTeamRepo.save(DtoToPlayer(playerTeamDto));
+        playerTeamRepo.save(dtoToPlayer(playerTeamDto));
     }
 
-    private PlayerTeam DtoToPlayer(PlayerTeamDto playerTeamDto) {
+    private PlayerTeam dtoToPlayer(PlayerTeamDto playerTeamDto) {
         PlayerTeam player = new PlayerTeam();
         player.setTeam(teamRepo.findById(playerTeamDto.getTeamId()).get());
         player.setName(playerTeamDto.getName());
@@ -55,7 +56,13 @@ public class PlayerTeamServiceImpl implements PlayerTeamService{
 
     @Transactional
     @Override
-    public void updatePlayer(PlayerTeamUpdDto playerTeamUpdDto, Long id) {
-
+    public void update(Long id, PlayerTeamUpdDto playerTeamUpdDto) {
+        PlayerTeam playerTeam = playerTeamRepo.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+        playerTeam.setName(playerTeamUpdDto.getName()==null?playerTeam.getName():playerTeamUpdDto.getName());
+        playerTeam.setSurname(playerTeamUpdDto.getSurname()==null?playerTeam.getSurname():playerTeamUpdDto.getSurname());
+        playerTeam.setPatronymic(playerTeamUpdDto.getPatronymic()==null?playerTeam.getPatronymic():playerTeamUpdDto.getPatronymic());
+        playerTeam.setBirthdate(playerTeamUpdDto.getBirthdate()==null?playerTeam.getBirthdate():playerTeamUpdDto.getBirthdate());
+        playerTeam.setRoleInTeam(playerTeamUpdDto.getRoleInTeam()==null?playerTeam.getRoleInTeam():playerTeamUpdDto.getRoleInTeam());
     }
 }

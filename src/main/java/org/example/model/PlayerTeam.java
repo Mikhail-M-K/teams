@@ -8,8 +8,8 @@ import java.util.Date;
 public class PlayerTeam {
     @Id
     @Column(name="id")
-    @SequenceGenerator(name="players_teamIdSeq", sequenceName="players_team_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy= GenerationType.AUTO, generator = "players_teamIdSeq")
+    @SequenceGenerator(name="players_teamIdSeq", sequenceName="SEQ_SERVICE", allocationSize = 1)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "players_teamIdSeq")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
