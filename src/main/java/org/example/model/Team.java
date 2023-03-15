@@ -18,9 +18,10 @@ public class Team {
     private String teamName;
 
     @Column(name = "sport_type")
-    private String SportType;
+    private String sportType;
 
     @Column(name = "foundation_date")
+    @Temporal(TemporalType.DATE)
     private Date foundationDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "team")
@@ -46,11 +47,11 @@ public class Team {
     }
 
     public String getSportType() {
-        return SportType;
+        return sportType;
     }
 
     public void setSportType(String sportType) {
-        SportType = sportType;
+        this.sportType = sportType;
     }
 
     public Date getFoundationDate() {

@@ -26,6 +26,7 @@ public class PlayerTeam {
     private String patronymic;
 
     @Column(name="birthdate")
+    @Temporal(TemporalType.DATE)
     private Date birthdate;
 
     @Column(name="role_in_team")

@@ -9,9 +9,11 @@ import org.example.repos.PlayerTeamRepo;
 import org.example.repos.TeamRepo;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 public class TeamServiceImpl implements TeamService{
@@ -25,12 +27,42 @@ public class TeamServiceImpl implements TeamService{
 
     @Override
     public List<TeamDto> readAll(String typeSport, Date startPeriod, Date finishPeriod) {
-        return null;
+        System.out.println(typeSport + " " + startPeriod + " " + finishPeriod);
+        if (startPeriod == null && finishPeriod == null && (typeSport == null || typeSport.isEmpty())){
+            return teamRepo.findAll().stream()
+                    .map(this::convertTeamToDto)
+                    .collect(Collectors.toList());
+        } else if (startPeriod == null && finishPeriod == null) {
+            return teamRepo.findAllBySportType(typeSport)
+                    .stream()
+                    .map(this::convertTeamToDto)
+                    .collect(Collectors.toList());
+        } else {
+            //поправить дату
+            if (finishPeriod == null) {
+                finishPeriod = new Date();
+            }
+            if (startPeriod == null) {
+                startPeriod = new Date("01.01.1000");
+            }
+            return teamRepo.findAllBySportTypeAndFoundationDateBetween(typeSport, startPeriod, finishPeriod)
+                    .stream()
+                    .map(this::convertTeamToDto)
+                    .collect(Collectors.toList());
+        }
+    }
+
+    private TeamDto convertTeamToDto(Team team) {
+        TeamDto teamDto = new TeamDto();
+        teamDto.setTeamName(team.getTeamName());
+        teamDto.setSportType(team.getSportType());
+        teamDto.setFoundationDate(team.getFoundationDate());
+        return teamDto;
     }
 
     @Override
     public List<PlayerTeamDto> readTeam(Long id, String role) {
-        if (role.isEmpty()) {
+        if (role == null || role.isEmpty()) {
             return playerTeamRepo.findAllByTeam_Id(id).stream()
                     .map(this::convertPlayerToDto)
                     .collect(Collectors.toList());
@@ -48,8 +80,8 @@ public class TeamServiceImpl implements TeamService{
         playerTeamDto.setName(playerTeam.getName());
         playerTeamDto.setSurname(playerTeam.getSurname());
         playerTeamDto.setPatronymic(playerTeam.getPatronymic());
-        playerTeamDto.setRoleInTeam(playerTeamDto.getRoleInTeam());
-        playerTeamDto.setBirthdate(playerTeamDto.getBirthdate());
+        playerTeamDto.setRoleInTeam(playerTeam.getRoleInTeam());
+        playerTeamDto.setBirthdate(playerTeam.getBirthdate());
         return playerTeamDto;
     }
 
