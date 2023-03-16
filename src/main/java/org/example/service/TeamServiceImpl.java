@@ -9,7 +9,12 @@ import org.example.repos.PlayerTeamRepo;
 import org.example.repos.TeamRepo;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,9 +30,11 @@ public class TeamServiceImpl implements TeamService{
         this.teamRepo = teamRepo;
     }
 
+    @Transactional
     @Override
-    public List<TeamDto> readAll(String typeSport, Date startPeriod, Date finishPeriod) {
+    public List<TeamDto> readAll(String typeSport, Date startPeriod, Date finishPeriod) throws ParseException {
         System.out.println(typeSport + " " + startPeriod + " " + finishPeriod);
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
         if (startPeriod == null && finishPeriod == null && (typeSport == null || typeSport.isEmpty())){
             return teamRepo.findAll().stream()
                     .map(this::convertTeamToDto)
@@ -38,17 +45,26 @@ public class TeamServiceImpl implements TeamService{
                     .map(this::convertTeamToDto)
                     .collect(Collectors.toList());
         } else {
-            //поправить дату
             if (finishPeriod == null) {
-                finishPeriod = new Date();
+                finishPeriod = ft.parse(String.valueOf(LocalDate.now()));
+                System.out.println(finishPeriod);
             }
             if (startPeriod == null) {
-                startPeriod = new Date("01.01.1000");
+                startPeriod = ft.parse("1000-01-01");
+                System.out.println(startPeriod);
             }
-            return teamRepo.findAllBySportTypeAndFoundationDateBetween(typeSport, startPeriod, finishPeriod)
-                    .stream()
-                    .map(this::convertTeamToDto)
-                    .collect(Collectors.toList());
+            if((typeSport == null || typeSport.isEmpty()) && (startPeriod != null || finishPeriod != null)) {
+                //поправить дату
+                return teamRepo.findAllByFoundationDateBetween(startPeriod, finishPeriod)
+                        .stream()
+                        .map(this::convertTeamToDto)
+                        .collect(Collectors.toList());
+            } else {
+                return teamRepo.findAllBySportTypeAndFoundationDateBetween(typeSport, startPeriod, finishPeriod)
+                        .stream()
+                        .map(this::convertTeamToDto)
+                        .collect(Collectors.toList());
+            }
         }
     }
 
@@ -60,6 +76,7 @@ public class TeamServiceImpl implements TeamService{
         return teamDto;
     }
 
+    @Transactional
     @Override
     public List<PlayerTeamDto> readTeam(Long id, String role) {
         if (role == null || role.isEmpty()) {
@@ -85,7 +102,7 @@ public class TeamServiceImpl implements TeamService{
         return playerTeamDto;
     }
 
-
+    @Transactional
     @Override
     public void createTeam(TeamDto teamDto) {
         teamRepo.save(dtoToTeam(teamDto));
@@ -94,19 +111,22 @@ public class TeamServiceImpl implements TeamService{
     private Team dtoToTeam(TeamDto teamDto) {
         Team team = new Team();
         team.setTeamName(teamDto.getTeamName());
-        team.setSportType(team.getSportType());
+        team.setSportType(teamDto.getSportType());
         team.setFoundationDate(teamDto.getFoundationDate());
-        return  team;
+        return team;
     }
 
+    @Transactional
     @Override
     public void deleteTeam(Long id) {
         teamRepo.deleteById(id);
     }
 
+    @Transactional
     @Override
-    public void updateTeam(TeamUpdDto teamUpdDto, Long id) {
-        Team team = new Team();
+    public void update( Long id, TeamUpdDto teamUpdDto) {
+        Team team = teamRepo.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
         team.setTeamName(teamUpdDto.getTeamName()==null?team.getTeamName():teamUpdDto.getTeamName());
         team.setSportType(teamUpdDto.getSportType()==null?team.getSportType():teamUpdDto.getSportType());
         team.setFoundationDate(teamUpdDto.getFoundationDate()==null?team.getFoundationDate():teamUpdDto.getFoundationDate());

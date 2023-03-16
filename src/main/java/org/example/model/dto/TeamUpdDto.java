@@ -6,7 +6,7 @@ public class TeamUpdDto {
 
     private String teamName;
 
-    private String SportType;
+    private String sportType;
 
     private Date foundationDate;
 
@@ -22,11 +22,11 @@ public class TeamUpdDto {
     }
 
     public String getSportType() {
-        return SportType;
+        return sportType;
     }
 
     public void setSportType(String sportType) {
-        SportType = sportType;
+        this.sportType = sportType;
     }
 
     public Date getFoundationDate() {

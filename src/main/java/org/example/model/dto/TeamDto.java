@@ -11,7 +11,7 @@ public class TeamDto {
 
     private String teamName;
 
-    private String SportType;
+    private String sportType;
 
     private Date foundationDate;
 
@@ -37,11 +37,11 @@ public class TeamDto {
     }
 
     public String getSportType() {
-        return SportType;
+        return sportType;
     }
 
     public void setSportType(String sportType) {
-        SportType = sportType;
+        sportType = sportType;
     }
 
     public Date getFoundationDate() {

@@ -24,7 +24,7 @@ public class Team {
     @Temporal(TemporalType.DATE)
     private Date foundationDate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "team")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "team",cascade = CascadeType.REMOVE)
     private Set<PlayerTeam> playerTeam;
 
     public Team() {

@@ -4,11 +4,12 @@ import org.example.model.dto.PlayerTeamDto;
 import org.example.model.dto.TeamDto;
 import org.example.model.dto.TeamUpdDto;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
 public interface TeamService {
-    List<TeamDto> readAll(String typeSport, Date startPeriod, Date finishPeriod);
+    List<TeamDto> readAll(String typeSport, Date startPeriod, Date finishPeriod) throws ParseException;
 
     List<PlayerTeamDto> readTeam(Long id, String role);
 
@@ -16,5 +17,5 @@ public interface TeamService {
 
     void deleteTeam(Long id);
 
-    void updateTeam(TeamUpdDto teamUpdDto, Long id);
+    void update(Long id,TeamUpdDto teamUpdDto);
 }
