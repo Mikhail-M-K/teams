@@ -17,5 +17,5 @@ public interface TeamService {
 
     void deleteTeam(Long id);
 
-    void update(Long id,TeamUpdDto teamUpdDto);
+    void update(Long id, TeamUpdDto teamUpdDto);
 }

@@ -9,7 +9,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -26,8 +25,8 @@ public class TeamController {
     @GetMapping(value = "/team")
     public List<TeamDto> readAll(
             @RequestParam(value = "typeSport", required = false) String typeSport,
-            @RequestParam(value = "startPeriod",required = false) @DateTimeFormat(pattern="dd.MM.yyyy") Date startPeriod,
-            @RequestParam(value = "finishPeriod", required = false) @DateTimeFormat(pattern="dd.MM.yyyy") Date finishPeriod) throws ParseException {
+            @RequestParam(value = "startPeriod", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") Date startPeriod,
+            @RequestParam(value = "finishPeriod", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") Date finishPeriod) throws ParseException {
         return teamService.readAll(typeSport, startPeriod, finishPeriod);
     }
 
@@ -42,13 +41,13 @@ public class TeamController {
         teamService.createTeam(teamDto);
     }
 
-    @PutMapping(value="/team/{id}")
-    public void update(@PathVariable(name="id") Long id, @RequestBody TeamUpdDto teamUpdDto) {
+    @PutMapping(value = "/team/{id}")
+    public void update(@PathVariable(name = "id") Long id, @RequestBody TeamUpdDto teamUpdDto) {
         teamService.update(id, teamUpdDto);
     }
 
-    @DeleteMapping(value="/team/{id}")
-    public void delete(@PathVariable(name="id") Long id){
+    @DeleteMapping(value = "/team/{id}")
+    public void delete(@PathVariable(name = "id") Long id) {
         teamService.deleteTeam(id);
     }
 }

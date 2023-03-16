@@ -4,10 +4,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="sequence" author="I am">
-        <createSequence sequenceName="SEQ_SERVICE" cycle="false"  startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="SEQ_SERVICE" cycle="false" startValue="1" incrementBy="1"/>
     </changeSet>
 
-    <changeSet id="create-table-teams" author="root" >
+    <changeSet id="create-table-teams" author="root">
         <createTable tableName="teams">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
@@ -32,7 +32,7 @@
             <column name="team_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="name" type="text" >
+            <column name="name" type="text">
                 <constraints nullable="false"/>
             </column>
             <column name="surname" type="text">

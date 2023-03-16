@@ -20,6 +20,6 @@ public class GlobalExceptionHandler {
         IncorrectData data = new IncorrectData();
         data.setInfo(exception.getMessage());
 
-        return new ResponseEntity<>(data,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(data, HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,12 +1,21 @@
 package org.example.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name="teams")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "teams")
 public class Team {
     @Id
     @Column(name = "id")
@@ -24,49 +33,6 @@ public class Team {
     @Temporal(TemporalType.DATE)
     private Date foundationDate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "team",cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "team", cascade = CascadeType.REMOVE)
     private Set<PlayerTeam> playerTeam;
-
-    public Team() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
-    public String getSportType() {
-        return sportType;
-    }
-
-    public void setSportType(String sportType) {
-        this.sportType = sportType;
-    }
-
-    public Date getFoundationDate() {
-        return foundationDate;
-    }
-
-    public void setFoundationDate(Date foundationDate) {
-        this.foundationDate = foundationDate;
-    }
-
-    public Set<PlayerTeam> getPlayerTeam() {
-        return playerTeam;
-    }
-
-    public void setPlayerTeam(Set<PlayerTeam> playerTeam) {
-        this.playerTeam = playerTeam;
-    }
 }

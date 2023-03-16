@@ -11,7 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Service
-public class PlayerTeamServiceImpl implements PlayerTeamService{
+public class PlayerTeamServiceImpl implements PlayerTeamService {
 
     PlayerTeamRepo playerTeamRepo;
     TeamRepo teamRepo;
@@ -34,7 +34,7 @@ public class PlayerTeamServiceImpl implements PlayerTeamService{
         player.setSurname(playerTeamDto.getSurname());
         player.setPatronymic(playerTeamDto.getPatronymic());
         player.setBirthdate(playerTeamDto.getBirthdate());
-        player.setRoleInTeam(player.getRoleInTeam());
+        player.setRoleInTeam(playerTeamDto.getRoleInTeam());
         return player;
     }
 
@@ -59,10 +59,10 @@ public class PlayerTeamServiceImpl implements PlayerTeamService{
     public void update(Long id, PlayerTeamUpdDto playerTeamUpdDto) {
         PlayerTeam playerTeam = playerTeamRepo.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
-        playerTeam.setName(playerTeamUpdDto.getName()==null?playerTeam.getName():playerTeamUpdDto.getName());
-        playerTeam.setSurname(playerTeamUpdDto.getSurname()==null?playerTeam.getSurname():playerTeamUpdDto.getSurname());
-        playerTeam.setPatronymic(playerTeamUpdDto.getPatronymic()==null?playerTeam.getPatronymic():playerTeamUpdDto.getPatronymic());
-        playerTeam.setBirthdate(playerTeamUpdDto.getBirthdate()==null?playerTeam.getBirthdate():playerTeamUpdDto.getBirthdate());
-        playerTeam.setRoleInTeam(playerTeamUpdDto.getRoleInTeam()==null?playerTeam.getRoleInTeam():playerTeamUpdDto.getRoleInTeam());
+        playerTeam.setName(playerTeamUpdDto.getName() == null ? playerTeam.getName() : playerTeamUpdDto.getName());
+        playerTeam.setSurname(playerTeamUpdDto.getSurname() == null ? playerTeam.getSurname() : playerTeamUpdDto.getSurname());
+        playerTeam.setPatronymic(playerTeamUpdDto.getPatronymic() == null ? playerTeam.getPatronymic() : playerTeamUpdDto.getPatronymic());
+        playerTeam.setBirthdate(playerTeamUpdDto.getBirthdate() == null ? playerTeam.getBirthdate() : playerTeamUpdDto.getBirthdate());
+        playerTeam.setRoleInTeam(playerTeamUpdDto.getRoleInTeam() == null ? playerTeam.getRoleInTeam() : playerTeamUpdDto.getRoleInTeam());
     }
 }

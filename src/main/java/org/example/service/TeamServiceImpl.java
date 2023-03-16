@@ -8,20 +8,18 @@ import org.example.model.dto.TeamUpdDto;
 import org.example.repos.PlayerTeamRepo;
 import org.example.repos.TeamRepo;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @Service
-public class TeamServiceImpl implements TeamService{
+public class TeamServiceImpl implements TeamService {
     PlayerTeamRepo playerTeamRepo;
     TeamRepo teamRepo;
 
@@ -35,7 +33,7 @@ public class TeamServiceImpl implements TeamService{
     public List<TeamDto> readAll(String typeSport, Date startPeriod, Date finishPeriod) throws ParseException {
         System.out.println(typeSport + " " + startPeriod + " " + finishPeriod);
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
-        if (startPeriod == null && finishPeriod == null && (typeSport == null || typeSport.isEmpty())){
+        if (startPeriod == null && finishPeriod == null && (typeSport == null || typeSport.isEmpty())) {
             return teamRepo.findAll().stream()
                     .map(this::convertTeamToDto)
                     .collect(Collectors.toList());
@@ -53,7 +51,7 @@ public class TeamServiceImpl implements TeamService{
                 startPeriod = ft.parse("1000-01-01");
                 System.out.println(startPeriod);
             }
-            if((typeSport == null || typeSport.isEmpty()) && (startPeriod != null || finishPeriod != null)) {
+            if ((typeSport == null || typeSport.isEmpty()) && (startPeriod != null || finishPeriod != null)) {
                 //поправить дату
                 return teamRepo.findAllByFoundationDateBetween(startPeriod, finishPeriod)
                         .stream()
@@ -124,11 +122,11 @@ public class TeamServiceImpl implements TeamService{
 
     @Transactional
     @Override
-    public void update( Long id, TeamUpdDto teamUpdDto) {
+    public void update(Long id, TeamUpdDto teamUpdDto) {
         Team team = teamRepo.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
-        team.setTeamName(teamUpdDto.getTeamName()==null?team.getTeamName():teamUpdDto.getTeamName());
-        team.setSportType(teamUpdDto.getSportType()==null?team.getSportType():teamUpdDto.getSportType());
-        team.setFoundationDate(teamUpdDto.getFoundationDate()==null?team.getFoundationDate():teamUpdDto.getFoundationDate());
+        team.setTeamName(teamUpdDto.getTeamName() == null ? team.getTeamName() : teamUpdDto.getTeamName());
+        team.setSportType(teamUpdDto.getSportType() == null ? team.getSportType() : teamUpdDto.getSportType());
+        team.setFoundationDate(teamUpdDto.getFoundationDate() == null ? team.getFoundationDate() : teamUpdDto.getFoundationDate());
     }
 }
