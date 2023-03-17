@@ -2,7 +2,7 @@ package org.example.service;
 
 import org.example.model.PlayerTeam;
 import org.example.model.Team;
-import org.example.model.dto.PlayerTeamDto;
+import org.example.model.dto.TeamPlayersDto;
 import org.example.model.dto.TeamDto;
 import org.example.model.dto.TeamUpdDto;
 import org.example.repos.PlayerTeamRepo;
@@ -31,7 +31,6 @@ public class TeamServiceImpl implements TeamService {
     @Transactional
     @Override
     public List<TeamDto> readAll(String typeSport, Date startPeriod, Date finishPeriod) throws ParseException {
-        System.out.println(typeSport + " " + startPeriod + " " + finishPeriod);
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
         if (startPeriod == null && finishPeriod == null && (typeSport == null || typeSport.isEmpty())) {
             return teamRepo.findAll().stream()
@@ -65,6 +64,7 @@ public class TeamServiceImpl implements TeamService {
 
     private TeamDto convertTeamToDto(Team team) {
         TeamDto teamDto = new TeamDto();
+        teamDto.setId(team.getId());
         teamDto.setTeamName(team.getTeamName());
         teamDto.setSportType(team.getSportType());
         teamDto.setFoundationDate(team.getFoundationDate());
@@ -73,9 +73,10 @@ public class TeamServiceImpl implements TeamService {
 
     @Transactional
     @Override
-    public List<PlayerTeamDto> readTeam(Long id, String role) {
+    public List<TeamPlayersDto> readTeam(Long id, String role) {
         if (role == null || role.isEmpty()) {
-            return playerTeamRepo.findAllByTeam_Id(id).stream()
+            return playerTeamRepo.findAllByTeam_Id(id)
+                    .stream()
                     .map(this::convertPlayerToDto)
                     .collect(Collectors.toList());
         } else {
@@ -87,14 +88,14 @@ public class TeamServiceImpl implements TeamService {
 
     }
 
-    private PlayerTeamDto convertPlayerToDto(PlayerTeam playerTeam) {
-        PlayerTeamDto playerTeamDto = new PlayerTeamDto();
-        playerTeamDto.setName(playerTeam.getName());
-        playerTeamDto.setSurname(playerTeam.getSurname());
-        playerTeamDto.setPatronymic(playerTeam.getPatronymic());
-        playerTeamDto.setRoleInTeam(playerTeam.getRoleInTeam());
-        playerTeamDto.setBirthdate(playerTeam.getBirthdate());
-        return playerTeamDto;
+    private TeamPlayersDto convertPlayerToDto(PlayerTeam playerTeam) {
+        TeamPlayersDto teamPlayersDto = new TeamPlayersDto();
+        teamPlayersDto.setName(playerTeam.getName());
+        teamPlayersDto.setSurname(playerTeam.getSurname());
+        teamPlayersDto.setPatronymic(playerTeam.getPatronymic());
+        teamPlayersDto.setRoleInTeam(playerTeam.getRoleInTeam());
+        teamPlayersDto.setBirthdate(playerTeam.getBirthdate());
+        return teamPlayersDto;
     }
 
     @Transactional

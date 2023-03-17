@@ -9,15 +9,14 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TeamDto {
+public class TeamPlayersDto {
+    private String name;
 
-    private Long id;
+    private String surname;
 
-    private String teamName;
+    private String patronymic;
 
-    private String sportType;
+    private Date birthdate;
 
-    private Date foundationDate;
-
-
+    private String roleInTeam;
 }

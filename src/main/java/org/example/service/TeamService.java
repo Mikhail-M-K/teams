@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.model.dto.PlayerTeamDto;
+import org.example.model.dto.TeamPlayersDto;
 import org.example.model.dto.TeamDto;
 import org.example.model.dto.TeamUpdDto;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public interface TeamService {
     List<TeamDto> readAll(String typeSport, Date startPeriod, Date finishPeriod) throws ParseException;
 
-    List<PlayerTeamDto> readTeam(Long id, String role);
+    List<TeamPlayersDto> readTeam(Long id, String role);
 
     void createTeam(TeamDto teamDto);
 

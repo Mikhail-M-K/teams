@@ -16,22 +16,22 @@ public class PlayerTeamController {
         this.playerTeamService = playerTeamService;
     }
 
-    @PostMapping(value = "/player")
+    @PostMapping(value = "/players")
     public void create(@RequestBody PlayerTeamDto playerTeamDto) {
         playerTeamService.createPLayer(playerTeamDto);
     }
 
-    @PutMapping(value = "/players_team/{id}")
+    @PutMapping(value = "/players/{id}")
     public void update(@PathVariable(name = "id") Long id, @RequestBody PlayerTeamUpdDto playerTeamUpdDto) {
         playerTeamService.update(id, playerTeamUpdDto);
     }
 
-    @PostMapping(value = "/player/{id}")
+    @PostMapping(value = "/players-transfer/{id}")
     public void transfer(@PathVariable(name = "id") Long id, @RequestParam(value = "idTeam") Long idTeam) {
         playerTeamService.transferPlayer(id, idTeam);
     }
 
-    @DeleteMapping(value = "/player/{id}")
+    @DeleteMapping(value = "/players/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
         playerTeamService.deletePlayer(id);
     }
