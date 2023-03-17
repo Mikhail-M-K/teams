@@ -1,14 +1,15 @@
 package org.example.service;
 
+import org.example.exceptions.IllegalArgumentException;
 import org.example.model.PlayerTeam;
 import org.example.model.dto.PlayerTeamDto;
 import org.example.model.dto.PlayerTeamUpdDto;
 import org.example.repos.PlayerTeamRepo;
 import org.example.repos.TeamRepo;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.Objects;
 
 @Service
 public class PlayerTeamServiceImpl implements PlayerTeamService {
@@ -29,7 +30,7 @@ public class PlayerTeamServiceImpl implements PlayerTeamService {
 
     private PlayerTeam dtoToPlayer(PlayerTeamDto playerTeamDto) {
         PlayerTeam player = new PlayerTeam();
-        player.setTeam(teamRepo.findById(playerTeamDto.getTeamId()).get());
+        player.setTeam(teamRepo.findById(playerTeamDto.getTeamId()).orElseThrow(EntityNotFoundException::new));
         player.setName(playerTeamDto.getName());
         player.setSurname(playerTeamDto.getSurname());
         player.setPatronymic(playerTeamDto.getPatronymic());
@@ -42,7 +43,10 @@ public class PlayerTeamServiceImpl implements PlayerTeamService {
     @Override
     public void transferPlayer(Long id, Long idTeam) {
         PlayerTeam playerTeam = playerTeamRepo.getReferenceById(id);
-        playerTeam.setTeam(teamRepo.findById(idTeam).get());
+        if (Objects.equals(playerTeam.getTeam().getId(), idTeam)) {
+            throw new IllegalArgumentException ("Игрок уже играет в этой команде");
+        }
+        playerTeam.setTeam(teamRepo.findById(idTeam).orElseThrow(EntityNotFoundException::new));
         playerTeamRepo.save(playerTeam);
 
     }

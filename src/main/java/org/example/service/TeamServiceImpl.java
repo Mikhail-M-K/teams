@@ -45,14 +45,11 @@ public class TeamServiceImpl implements TeamService {
         } else {
             if (finishPeriod == null) {
                 finishPeriod = ft.parse(String.valueOf(LocalDate.now()));
-                System.out.println(finishPeriod);
             }
             if (startPeriod == null) {
                 startPeriod = ft.parse("1000-01-01");
-                System.out.println(startPeriod);
             }
             if ((typeSport == null || typeSport.isEmpty()) && (startPeriod != null || finishPeriod != null)) {
-                //поправить дату
                 return teamRepo.findAllByFoundationDateBetween(startPeriod, finishPeriod)
                         .stream()
                         .map(this::convertTeamToDto)
