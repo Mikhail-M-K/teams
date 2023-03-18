@@ -3,6 +3,7 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.model.dto.TeamDto;
 import org.example.model.dto.TeamPlayersDto;
+import org.example.model.dto.TeamReadDto;
 import org.example.model.dto.TeamUpdDto;
 import org.example.service.TeamService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,7 +20,7 @@ public class TeamController {
     private final TeamService teamService;
 
     @GetMapping(value = "/teams")
-    public List<TeamDto> readAll(
+    public List<TeamReadDto> readAll(
             @RequestParam(value = "typeSport", required = false) String typeSport,
             @RequestParam(value = "startPeriod", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate startPeriod,
             @RequestParam(value = "finishPeriod", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate finishPeriod) throws ParseException {

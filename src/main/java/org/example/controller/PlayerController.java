@@ -13,8 +13,8 @@ public class PlayerController {
     private final PlayerService playerService;
 
     @PostMapping(value = "/players")
-    public void create(@RequestBody PlayerDto playerTeamDto) {
-        playerService.createPLayer(playerTeamDto);
+    public void create(@RequestBody PlayerDto playerDto) {
+        playerService.createPLayer(playerDto);
     }
 
     @PutMapping(value = "/players/{id}")

@@ -9,7 +9,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TeamDto {
+public class TeamReadDto {
+
+    private Long id;
 
     private String teamName;
 

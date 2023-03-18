@@ -5,6 +5,7 @@ import org.example.model.Player;
 import org.example.model.Team;
 import org.example.model.dto.TeamDto;
 import org.example.model.dto.TeamPlayersDto;
+import org.example.model.dto.TeamReadDto;
 import org.example.model.dto.TeamUpdDto;
 import org.example.repos.PlayerRepo;
 import org.example.repos.TeamRepo;
@@ -26,7 +27,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Transactional
     @Override
-    public List<TeamDto> readAll(String typeSport, LocalDate startPeriod, LocalDate finishPeriod) throws ParseException {
+    public List<TeamReadDto> readAll(String typeSport, LocalDate startPeriod, LocalDate finishPeriod) throws ParseException {
         //SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         if (startPeriod == null && finishPeriod == null && (typeSport == null || typeSport.isEmpty())) {
@@ -43,7 +44,7 @@ public class TeamServiceImpl implements TeamService {
                 finishPeriod = LocalDate.now();
             }
             if (startPeriod == null) {
-                startPeriod = LocalDate.of(1000, 01, 01);
+                startPeriod = LocalDate.of(1000, 1, 1);
             }
             if ((typeSport == null || typeSport.isEmpty()) && (startPeriod != null || finishPeriod != null)) {
                 return teamRepo.findAllByFoundationDateBetween(startPeriod, finishPeriod)
@@ -59,13 +60,13 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-    private TeamDto convertTeamToDto(Team team) {
-        TeamDto teamDto = new TeamDto();
-        teamDto.setId(team.getId());
-        teamDto.setTeamName(team.getTeamName());
-        teamDto.setSportType(team.getSportType());
-        teamDto.setFoundationDate(team.getFoundationDate());
-        return teamDto;
+    private TeamReadDto convertTeamToDto(Team team) {
+        TeamReadDto teamReadDto = new TeamReadDto();
+        teamReadDto.setId(team.getId());
+        teamReadDto.setTeamName(team.getTeamName());
+        teamReadDto.setSportType(team.getSportType());
+        teamReadDto.setFoundationDate(team.getFoundationDate());
+        return teamReadDto;
     }
 
     @Transactional
