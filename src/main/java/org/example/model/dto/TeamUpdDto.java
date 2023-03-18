@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -15,6 +15,6 @@ public class TeamUpdDto {
 
     private String sportType;
 
-    private Date foundationDate;
+    private LocalDate foundationDate;
 
 }

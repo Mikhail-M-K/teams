@@ -3,53 +3,6 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="sequence" author="I am">
-        <createSequence sequenceName="SEQ_SERVICE" cycle="false" startValue="1" incrementBy="1"/>
-    </changeSet>
-
-    <changeSet id="create-table-teams" author="root">
-        <createTable tableName="teams">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="team_name" type="text">
-                <constraints nullable="false"/>
-            </column>
-            <column name="sport_type" type="text">
-                <constraints nullable="false"/>
-            </column>
-            <column name="foundation_date" type="date">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-
-    <changeSet id="create-table-players_team" author="root">
-        <createTable tableName="players_team">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="team_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="text">
-                <constraints nullable="false"/>
-            </column>
-            <column name="surname" type="text">
-                <constraints nullable="false"/>
-            </column>
-            <column name="patronymic" type="text">
-                <constraints nullable="false"/>
-            </column>
-            <column name="birthdate" type="date"/>
-            <column name="role_in_team" type="text">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addForeignKeyConstraint baseTableName="teams" baseColumnNames="id"
-                                 constraintName="fk_players_team_id_teams_id"
-                                 referencedTableName="teams" referencedColumnNames="id"/>
-    </changeSet>
+    <include file="v.1.0.0/changelog.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

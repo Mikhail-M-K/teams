@@ -1,37 +1,34 @@
 package org.example.service;
 
-import org.example.model.PlayerTeam;
+import lombok.AllArgsConstructor;
+import org.example.model.Player;
 import org.example.model.Team;
-import org.example.model.dto.TeamPlayersDto;
 import org.example.model.dto.TeamDto;
+import org.example.model.dto.TeamPlayersDto;
 import org.example.model.dto.TeamUpdDto;
-import org.example.repos.PlayerTeamRepo;
+import org.example.repos.PlayerRepo;
 import org.example.repos.TeamRepo;
 import org.springframework.stereotype.Service;
+
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
+@AllArgsConstructor
 public class TeamServiceImpl implements TeamService {
-    PlayerTeamRepo playerTeamRepo;
+    PlayerRepo playerRepo;
     TeamRepo teamRepo;
-
-    public TeamServiceImpl(PlayerTeamRepo playerTeamRepo, TeamRepo teamRepo) {
-        this.playerTeamRepo = playerTeamRepo;
-        this.teamRepo = teamRepo;
-    }
 
     @Transactional
     @Override
-    public List<TeamDto> readAll(String typeSport, Date startPeriod, Date finishPeriod) throws ParseException {
-        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+    public List<TeamDto> readAll(String typeSport, LocalDate startPeriod, LocalDate finishPeriod) throws ParseException {
+        //SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         if (startPeriod == null && finishPeriod == null && (typeSport == null || typeSport.isEmpty())) {
             return teamRepo.findAll().stream()
                     .map(this::convertTeamToDto)
@@ -43,10 +40,10 @@ public class TeamServiceImpl implements TeamService {
                     .collect(Collectors.toList());
         } else {
             if (finishPeriod == null) {
-                finishPeriod = ft.parse(String.valueOf(LocalDate.now()));
+                finishPeriod = LocalDate.now();
             }
             if (startPeriod == null) {
-                startPeriod = ft.parse("1000-01-01");
+                startPeriod = LocalDate.of(1000, 01, 01);
             }
             if ((typeSport == null || typeSport.isEmpty()) && (startPeriod != null || finishPeriod != null)) {
                 return teamRepo.findAllByFoundationDateBetween(startPeriod, finishPeriod)
@@ -75,12 +72,12 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public List<TeamPlayersDto> readTeam(Long id, String role) {
         if (role == null || role.isEmpty()) {
-            return playerTeamRepo.findAllByTeam_Id(id)
+            return playerRepo.findAllByTeamId(id)
                     .stream()
                     .map(this::convertPlayerToDto)
                     .collect(Collectors.toList());
         } else {
-            return playerTeamRepo.findAllByTeam_IdAndRoleInTeam(id, role)
+            return playerRepo.findAllByTeamIdAndRoleInTeam(id, role)
                     .stream()
                     .map(this::convertPlayerToDto)
                     .collect(Collectors.toList());
@@ -88,13 +85,13 @@ public class TeamServiceImpl implements TeamService {
 
     }
 
-    private TeamPlayersDto convertPlayerToDto(PlayerTeam playerTeam) {
+    private TeamPlayersDto convertPlayerToDto(Player player) {
         TeamPlayersDto teamPlayersDto = new TeamPlayersDto();
-        teamPlayersDto.setName(playerTeam.getName());
-        teamPlayersDto.setSurname(playerTeam.getSurname());
-        teamPlayersDto.setPatronymic(playerTeam.getPatronymic());
-        teamPlayersDto.setRoleInTeam(playerTeam.getRoleInTeam());
-        teamPlayersDto.setBirthdate(playerTeam.getBirthdate());
+        teamPlayersDto.setName(player.getName());
+        teamPlayersDto.setSurname(player.getSurname());
+        teamPlayersDto.setPatronymic(player.getPatronymic());
+        teamPlayersDto.setRoleInTeam(player.getRoleInTeam());
+        teamPlayersDto.setBirthdate(player.getBirthdate());
         return teamPlayersDto;
     }
 

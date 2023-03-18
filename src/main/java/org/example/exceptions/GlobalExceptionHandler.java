@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler
     public ResponseEntity<IncorrectData> handlerException(NoSuchObjectException exception) {
         IncorrectData data = new IncorrectData();

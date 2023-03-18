@@ -1,32 +1,28 @@
 package org.example.controller;
 
-import org.example.model.dto.TeamPlayersDto;
+import lombok.RequiredArgsConstructor;
 import org.example.model.dto.TeamDto;
+import org.example.model.dto.TeamPlayersDto;
 import org.example.model.dto.TeamUpdDto;
 import org.example.service.TeamService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class TeamController {
 
     private final TeamService teamService;
 
-    @Autowired
-    public TeamController(TeamService teamService) {
-        this.teamService = teamService;
-    }
-
     @GetMapping(value = "/teams")
     public List<TeamDto> readAll(
             @RequestParam(value = "typeSport", required = false) String typeSport,
-            @RequestParam(value = "startPeriod", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") Date startPeriod,
-            @RequestParam(value = "finishPeriod", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") Date finishPeriod) throws ParseException {
+            @RequestParam(value = "startPeriod", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate startPeriod,
+            @RequestParam(value = "finishPeriod", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate finishPeriod) throws ParseException {
         return teamService.readAll(typeSport, startPeriod, finishPeriod);
     }
 

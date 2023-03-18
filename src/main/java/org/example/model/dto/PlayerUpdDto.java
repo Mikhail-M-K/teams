@@ -4,14 +4,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class PlayerTeamDto {
-    private Long id;
-    private Long teamId;
+public class PlayerUpdDto {
 
     private String name;
 
@@ -19,7 +18,7 @@ public class PlayerTeamDto {
 
     private String patronymic;
 
-    private Date birthdate;
+    private LocalDate birthdate;
 
     private String roleInTeam;
 

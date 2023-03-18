@@ -4,19 +4,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class TeamPlayersDto {
+
     private String name;
 
     private String surname;
 
     private String patronymic;
 
-    private Date birthdate;
+    private LocalDate birthdate;
 
     private String roleInTeam;
 }

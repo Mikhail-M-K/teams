@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -30,9 +30,8 @@ public class Team {
     private String sportType;
 
     @Column(name = "foundation_date")
-    @Temporal(TemporalType.DATE)
-    private Date foundationDate;
+    private LocalDate foundationDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "team", cascade = CascadeType.REMOVE)
-    private Set<PlayerTeam> playerTeam;
+    private Set<Player> playerTeam;
 }

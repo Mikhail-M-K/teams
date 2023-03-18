@@ -1,6 +1,7 @@
 package org.example.exceptions;
 
 public class IncorrectData {
+
     private String info;
 
     public IncorrectData() {
