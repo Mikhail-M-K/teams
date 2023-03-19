@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +25,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Transactional
     @Override
-    public List<TeamReadDto> readAll(String typeSport, LocalDate startPeriod, LocalDate finishPeriod) throws ParseException {
-        //SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public List<TeamReadDto> readAll(String typeSport, LocalDate startPeriod, LocalDate finishPeriod){
         if (startPeriod == null && finishPeriod == null && (typeSport == null || typeSport.isEmpty())) {
             return teamRepo.findAll().stream()
                     .map(this::convertTeamToDto)
