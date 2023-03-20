@@ -20,12 +20,14 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class TeamServiceImpl implements TeamService {
+
     PlayerRepo playerRepo;
+
     TeamRepo teamRepo;
 
     @Transactional
     @Override
-    public List<TeamReadDto> readAll(String typeSport, LocalDate startPeriod, LocalDate finishPeriod){
+    public List<TeamReadDto> readAll(String typeSport, LocalDate startPeriod, LocalDate finishPeriod) {
         if (startPeriod == null && finishPeriod == null && (typeSport == null || typeSport.isEmpty())) {
             return teamRepo.findAll().stream()
                     .map(this::convertTeamToDto)

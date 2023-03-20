@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface TeamRepo extends JpaRepository<Team, Long> {
+
     List<Team> findAllBySportTypeAndFoundationDateBetween(String sportType, LocalDate foundationDateBetweenStart, LocalDate foundationDateBetweenFinish);
 
     List<Team> findAllBySportType(String sportType);

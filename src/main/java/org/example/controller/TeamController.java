@@ -9,7 +9,6 @@ import org.example.service.TeamService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class TeamController {
     public List<TeamReadDto> readAll(
             @RequestParam(value = "typeSport", required = false) String typeSport,
             @RequestParam(value = "startPeriod", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate startPeriod,
-            @RequestParam(value = "finishPeriod", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate finishPeriod) throws ParseException {
+            @RequestParam(value = "finishPeriod", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate finishPeriod) {
         return teamService.readAll(typeSport, startPeriod, finishPeriod);
     }
 

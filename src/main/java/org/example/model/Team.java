@@ -17,6 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "teams")
 public class Team {
+
     @Id
     @Column(name = "id")
     @SequenceGenerator(name = "teamsIdSeq", sequenceName = "SEQ_SERVICE", allocationSize = 1)
