@@ -75,7 +75,7 @@
    - метод POST
    - URL "/players"  
 
-\- Пример ответного JSON: 
+\- Пример JSON: 
    ```JSON  
         {
           "teamId" : 1,
