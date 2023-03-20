@@ -113,6 +113,16 @@
      \- birthdate - день рождения  
      \- roleInTeam - роль/позиция в команде  
 
+ \- Пример JSON: 
+   ```JSON  
+        {
+          "name": "Иван",
+          "surname": "Иванов",
+          "patronymic": "Иванович",
+          "birthdate": "1997-11-01",
+          "roleInTeam": "Нападающий"
+        }
+  ```
 ## Удаление участника команды
   - метод DELETE
   - URL "/players/{id}"
